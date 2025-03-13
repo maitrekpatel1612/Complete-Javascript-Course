@@ -1,208 +1,121 @@
-# JavaScript Memory Management: Stack vs Heap
+# Modern JavaScript Course
 
-JavaScript manages memory through two main storage mechanisms: Stack and Heap. Understanding how these work is crucial for efficient JavaScript programming.
+![JavaScript Course Header](/image.png)
 
-## Stack Memory
+## Course Overview
 
-Stack memory stores primitive values (like numbers, strings, booleans) and references to objects/functions.
+This comprehensive JavaScript course takes you from the basics to advanced concepts, focusing on modern JavaScript practices. Each module builds upon the previous one, providing a solid foundation for becoming a proficient JavaScript developer.
 
-- **Characteristics**:
-  - Fixed size, static memory allocation
-  - LIFO (Last In, First Out) data structure
-  - Stores local variables and function calls
-  - Faster access than heap
-  - Limited in size
-  - Automatic memory management
+## Course Structure
 
-## Heap Memory
+### Module 01: JavaScript Basics
 
-Heap memory stores objects, arrays, functions, and other complex data structures.
+In this module, we cover the fundamental building blocks of JavaScript programming:
 
-- **Characteristics**:
-  - Dynamic memory allocation
-  - No specific order of storage
-  - Stores reference values
-  - Larger in size
-  - Slower access than stack
-  - Memory is managed by garbage collection
+1. **Variables and Data Types**
+   - Understanding `let`, `const`, and `var`
+   - Primitive and reference types
+   - Type conversion and coercion
 
-## Visual Representation
+2. **Operators and Expressions**
+   - Arithmetic, assignment, and comparison operators
+   - Logical operators and short-circuit evaluation
+   - Operator precedence
 
-### Stack Memory Allocation
+3. **Control Flow**
+   - Conditional statements (`if`, `else`, `switch`)
+   - Loops (`for`, `while`, `do-while`, `for...in`, `for...of`)
+   - Error handling with try/catch
 
-```mermaid
-graph TD
-    subgraph "Stack Memory"
-        A[name: 'John']
-        B[age: 30]
-        C[isActive: true]
-        D[userRef: 0x123]
-        E[arrayRef: 0x456]
-    end
-    
-    subgraph "Heap Memory"
-        F["{name: 'John', role: 'Developer'}" <br> Address: 0x123]
-        G["[1, 2, 3, 4]" <br> Address: 0x456]
-    end
-    
-    D -->|references| F
-    E -->|references| G
-```
+4. **Functions**
+   - Function declarations vs expressions
+   - Arrow functions
+   - Function parameters and return values
+   - Scope and closures
 
-### Example of Function Call Stack
+5. **Objects and Arrays**
+   - Object creation and manipulation
+   - Array methods and operations
+   - Destructuring assignments
 
-```mermaid
-graph TD
-    subgraph "Stack Memory"
-        direction TB
-        A["main() context<br>x = 10<br>result = ?"]
-        B["multiply() context<br>a = 10<br>b = 5"]
-        C["add() context<br>a = 50<br>b = 20"]
-        
-        A --> B --> C
-    end
-```
+6. **[Numbers and Math](01_Basics/06_Nums_and_Math.js)**
+   - Number methods and properties
+   - The Math object
+   - Precision in JavaScript calculations
 
-## Practical Example
+7. **[Dates in JavaScript](01_Basics/07_Dates.md)**
+   - Date API (Legacy)
+   - Temporal API (Modern)
+   - Date formatting and manipulation
 
-```mermaid
-sequenceDiagram
-    participant Stack
-    participant Heap
-    participant GC as Garbage Collector
-    
-    Note over Stack,Heap: Variable Declaration
-    Stack->>Stack: let name = "John" (primitive - stored in Stack)
-    Stack->>Heap: let user = {name: "John", age: 30} (object - stored in Heap)
-    Stack->>Stack: Store reference to user object (0x123)
-    
-    Note over Stack,Heap: Reassignment
-    Stack->>Stack: name = "Jane" (new value in Stack)
-    Stack->>Heap: user.name = "Jane" (modify object in Heap)
-    
-    Note over Stack,Heap: Function Execution
-    Stack->>Stack: Add function frame to Stack
-    Stack->>Stack: Local variables in function frame
-    Stack->>Stack: Remove function frame when complete
-    
-    Note over Stack,Heap: Losing Reference
-    Stack->>Stack: user = null (reference removed)
-    GC->>Heap: Detect unreferenced object
-    GC->>Heap: Free memory of unreferenced object
-```
+### Module 02: Advanced JavaScript
 
-## Key Points to Remember
+This module delves deeper into JavaScript's more powerful features:
 
-1. **Primitive types** (Number, String, Boolean, null, undefined, Symbol, BigInt) are stored in the **Stack**.
-2. **Reference types** (Object, Array, Function) are stored in the **Heap**, with references to them stored in the Stack.
-3. When you pass a primitive value to a function, you pass a copy (pass-by-value).
-4. When you pass an object to a function, you pass the reference (pass-by-reference).
-5. JavaScript's garbage collector automatically frees heap memory when objects no longer have references.
+1. **Asynchronous JavaScript**
+   - Callbacks
+   - Promises
+   - Async/await
 
-## Code Examples
+2. **ES6+ Features**
+   - Template literals
+   - Spread/rest operators
+   - Default parameters
+   - Classes and inheritance
 
-### Primitive vs Reference Types
+3. **Working with APIs**
+   - Fetch API
+   - JSON manipulation
+   - RESTful API interactions
 
-```javascript
-// Primitive types (stored in Stack)
-let a = 10;
-let b = a;  // Copy of value
-b = 20;     // Modifying b doesn't affect a
-console.log(a);  // 10
-console.log(b);  // 20
+4. **Modern JavaScript Patterns**
+   - Module pattern
+   - Factory functions
+   - Functional programming concepts
 
-// Reference types (reference stored in Stack, object in Heap)
-let obj1 = { name: "John", age: 30 };
-let obj2 = obj1;  // Copy of reference (both point to same object)
-obj2.name = "Jane";  // Modifies the object both variables point to
-console.log(obj1.name);  // "Jane"
-console.log(obj2.name);  // "Jane"
-```
+### Module 03: JavaScript in Practice
 
-### Function Parameters
+This module focuses on applying JavaScript in real-world scenarios:
 
-```javascript
-// Primitive type (pass by value)
-function incrementAge(age) {
-    age = age + 1;
-    console.log("Inside function:", age);
-    return age;
-}
+1. **DOM Manipulation**
+   - Selecting and modifying elements
+   - Event handling
+   - Creating interactive UIs
 
-let userAge = 30;
-let newAge = incrementAge(userAge);  // Copy of value is passed
-console.log("Original age:", userAge);  // 30 (unchanged)
-console.log("New age:", newAge);  // 31
+2. **Browser Storage**
+   - LocalStorage and SessionStorage
+   - Cookies
+   - IndexedDB
 
-// Reference type (pass by reference)
-function updateUser(user) {
-    user.age = user.age + 1;  // Modifies the actual object
-    console.log("Inside function:", user.age);
-}
+3. **Performance Optimization**
+   - Memory management
+   - Algorithm efficiency
+   - Loading strategies
 
-const user = { name: "John", age: 30 };
-updateUser(user);  // Reference to object is passed
-console.log("Updated user age:", user.age);  // 31 (changed)
-```
+4. **Testing JavaScript Applications**
+   - Unit testing
+   - Integration testing
+   - Testing frameworks
 
-### Memory Lifecycle Example
+## Prerequisites
 
-```javascript
-// Memory allocation
-function createObjects() {
-    // Allocates memory for primitive in Stack
-    let count = 0;
-    
-    // Allocates memory for objects in Heap
-    let temporaryObject = { data: "Will be garbage collected" };
-    
-    // This object will be returned and referenced outside
-    let persistentObject = { data: "Will remain in memory" };
-    
-    return persistentObject;
-}
+- Basic understanding of HTML and CSS
+- A code editor (VS Code recommended)
+- Modern web browser
 
-// Memory use
-const myObject = createObjects();
-console.log(myObject.data);  // "Will remain in memory"
+## Setup Instructions
 
-// At this point:
-// - 'count' and 'temporaryObject' are no longer accessible
-// - 'temporaryObject' is eligible for garbage collection
-// - 'persistentObject' remains in Heap memory because 'myObject' references it
-```
+1. Clone this repository
+2. Navigate to the lesson directories
+3. Open the JavaScript files in your code editor
+4. Run examples in your browser or Node.js environment
 
-### Closure and Memory
+## Resources
 
-```javascript
-function createCounter() {
-    // This variable is stored in closure scope
-    let count = 0;
-    
-    // This function maintains reference to count
-    return function() {
-        count++;
-        return count;
-    };
-}
+- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [JavaScript.info](https://javascript.info/)
+- [ECMAScript Specifications](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)
 
-const increment = createCounter();
-console.log(increment());  // 1
-console.log(increment());  // 2
-console.log(increment());  // 3
+## License
 
-// Even though createCounter has finished executing,
-// the 'count' variable remains in memory because
-// the returned function (stored in 'increment') 
-// maintains a reference to it.
-```
-
-## Memory Leaks
-
-Common causes of memory leaks in JavaScript:
-  Unintended global variables
-  Forgotten timers or callbacks
-  Out of DOM references
-  Closures maintaining references to large objects
-
-Understanding stack and heap memory helps write more efficient code and avoid memory-related issues in JavaScript applications.
+This course content is licensed under the MIT License.
