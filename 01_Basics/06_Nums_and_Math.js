@@ -73,3 +73,6 @@ console.log(Math.floor(Math.random() * 10) + 1); // Random integer between 1 and
 const min = 10;
 const max = 20;
 console.log(Math.floor(Math.random() * (max - min + 1)) + min); //-> Random integer between min and max
+
+let newDate = new Date(); // Create a new date object
+console.log(newDate.toLocaleString('default',{}));
